@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{myBundle.RegistroAsistenciaTitle}"/>
+    </ui:define>
+
+    <ui:define name="body">
+        
+        <p:tabView id="tabOpciones">
+            <p:tab title="Lista de Asistencias">
+                            <ui:include src="/registroAsistencia/List.xhtml"/>
+
+            </p:tab>
+            <p:tab title="BUSQUEDA">
+                <h:form id="frmAsignacionEmpleado">
+                    <p:panel header="Búsqueda de Asistencias">
+                        <p:panelGrid columnClasses="column" columns="2">
+                           <p:outputLabel value="Empleado:" for="empleadoBuscado"/>                           
+                           <p:autoComplete id="empleadoBuscado" value="#{registroAsistenciaController.empleadoSeleccionado}" completeMethod="#{empleadoController.metodo}"
+                                                var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" required="true"/>
+                             
+                            <p:outputLabel value="De:" for="fechaInicio"/>
+                            <p:inputMask id="fechaInicio" value="#{registroAsistenciaController.fechaInicio}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaInicio}">  
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+                            
+                            <p:outputLabel value="Hasta:" for="fechaFin"/>
+                            <p:inputMask id="fechaFin" value="#{registroAsistenciaController.fechaFin}" mask="99/99/9999" title="#{myBundle.CreatePermisoTitle_fechaFin}">  
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:inputMask>
+
+                            <p:commandButton id="btnBuscar" icon="ui-icon-search" value="Buscar Registros" update="listaMarcaciones"/>
+                        </p:panelGrid>
+                        
+                        <p:dataTable
+                            id="listaMarcaciones"
+                            value="#{registroAsistenciaController.registrosAsistencia}"
+                            var="registro"
+                            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                            paginator="true"
+                            rowKey="#{registro.id}"
+                            rows="15"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            selectionMode="single"
+                             style="margin-bottom:20px"
+                            selection="#{registroAsistenciaController.selected}">
+                     
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Fecha Marcación"/>
+                                </f:facet>                                
+                                <h:outputText value="#{registro.fecha}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Hora de Marcación"/>
+                                </f:facet>
+                                <h:outputText value="#{registro.hora}">
+                                    <f:convertDateTime pattern="HH:mm"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Biométrico"/>
+                                </f:facet>
+                                <h:outputText value="#{registro.biometricoId.marca} #{registro.biometricoId.modelo}"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                        <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}"  update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
+                        <h:commandLink>
+                                    <h:outputText value="Descargar Excel"/>
+                                    <p:dataExporter type="xls" target="listaMarcaciones" fileName="Reporte para Empleado - Asistencias" />
+                        </h:commandLink>
+                    </p:panel>
+                    
+                </h:form>
+            </p:tab>
+        </p:tabView>
+        
+       
+        <ui:include src="/registroAsistencia/View.xhtml"/>
+        <ui:include src="/registroAsistencia/Edit.xhtml"/>
+        <ui:include src="/registroAsistencia/Create.xhtml"/>
+        <ui:include src="/empleado/View.xhtml"/>
+        <ui:include src="/biometrico/View.xhtml"/>
+      
+    </ui:define>
+ 
+</ui:composition>

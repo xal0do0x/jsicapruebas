@@ -1,0 +1,43 @@
+.ui-widget {
+    font-size: 12px !important;
+}
+.ui-layout-north {
+    z-index:20 !important;
+    overflow:visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow:visible !important;
+}
+.ui-widget-header {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.ui-inputtext{
+    text-transform: uppercase;
+}
+
+.ui-datatable .ui-datatable-footer .footer-section {
+    text-align: left;
+}
+
+.column {
+    font-weight: bold;
+    background-color: menu;
+}
+/*Index.xhtml*/
+.ui-layout-unit-header-title{
+    font-size: 3em;
+}
+.ui-menubar, .ui-menuitem-link {
+    font-style:  italic;
+width: auto;
+padding: 0.4em 0.3em;
+font-size: 1.2em;
+}
+.ui-menu, .ui-menu-parent, .ui-menu-child {
+width: 20.5em;
+}
+.ui-layout-unit-footer-title{
+    text-align: left;
+}

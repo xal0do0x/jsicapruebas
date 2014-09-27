@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RegistroAsistenciaListForm">
+
+        <p:panel header="#{myBundle.ListRegistroAsistenciaTitle}">
+            <p:dataTable id="datalist"
+                         value="#{registroAsistenciaController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{registroAsistenciaController.selected}">
+
+                <p:ajax event="rowSelect"   update=":tabOpciones:RegistroAsistenciaListForm:createButton :tabOpciones:RegistroAsistenciaListForm:viewButton :tabOpciones:RegistroAsistenciaListForm:editButton :tabOpciones:RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":tabOpciones:RegistroAsistenciaListForm:createButton :tabOpciones:RegistroAsistenciaListForm:viewButton :tabOpciones:RegistroAsistenciaListForm:editButton :tabOpciones:RegistroAsistenciaListForm:deleteButton " listener="#{registroAsistenciaController.resetParents}"/>
+                
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_hora}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.hora}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_biometricoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.biometricoId.id}"/>
+                </p:column>
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListRegistroAsistenciaTitle_empleadoId}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleadoId.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{registroAsistenciaController.prepareCreate}" update=":RegistroAsistenciaCreateForm" oncomplete="PF('RegistroAsistenciaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":RegistroAsistenciaViewForm" oncomplete="PF('RegistroAsistenciaViewDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":RegistroAsistenciaEditForm" oncomplete="PF('RegistroAsistenciaEditDialog').show()" disabled="#{empty registroAsistenciaController.selected}"/>
+            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{registroAsistenciaController.delete}" update=":growl,datalist" disabled="#{empty registroAsistenciaController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

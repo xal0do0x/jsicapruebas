@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FichaGeneralEmpleadoCreateDlg" widgetVar="FichaGeneralEmpleadoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateFichaGeneralEmpleadoTitle}" closeOnEscape="true">
+
+            <h:form id="FichaGeneralEmpleadoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fichaGeneralEmpleadoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_empleadoId}" for="empleadoId" />
+                        <p:autoComplete id="empleadoId" value="#{fichaGeneralEmpleadoController.selected.empleadoId}" completeMethod="#{empleadoController.metodo}"
+                                        var="empleado" itemLabel="#{empleado.empleado}" itemValue="#{empleado}" converter="empleadoConverter" size="70" required="true"/>                    
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{fichaGeneralEmpleadoController.selected.email}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_email}" size="70" maxlength="70"/>
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{fichaGeneralEmpleadoController.selected.direccion}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_direccion}" size="70" maxlength="70"/>
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoZona}" for="direccionTipoZona" />                        
+                        <p:selectOneMenu id="direccionTipoZona" value="#{fichaGeneralEmpleadoController.selected.direccionTipoZona}"  >
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" /> 
+                            <f:selectItem itemLabel="U.R. URBANIZACIÓN" itemValue="U.R."  />
+                            <f:selectItem itemLabel="A.H. ASENTAMIENTO HU" itemValue="A.H."  />
+                            <f:selectItem itemLabel="C.H. CONJUNTO HABITA" itemValue="C.H." />
+                            <f:selectItem itemLabel="CAS. CASERÍO" itemValue="CAS." />
+                            <f:selectItem itemLabel="COO. COOPERATIVA" itemValue="COO." />
+                            <f:selectItem itemLabel="FND. FUNDO" itemValue="FND." />
+                            <f:selectItem itemLabel="GRU. GRUPO" itemValue="GRU." />
+                            <f:selectItem itemLabel="P.J. PUEBLO JOVEN" itemValue="P.J." />
+                            <f:selectItem itemLabel="RES. RESIDENCIAL" itemValue="RES." />
+                            <f:selectItem itemLabel="U.V. UNIDAD VECINAL" itemValue="U.V." />
+                            <f:selectItem itemLabel="Z.I. ZONA INDUSTRIAL" itemValue="Z.I." />
+                        </p:selectOneMenu>     
+                        
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_direccionTipoVia}" for="direccionTipoVia" />                       
+                        <p:selectOneMenu id="direccionTipoVia" value="#{fichaGeneralEmpleadoController.selected.direccionTipoVia}" >
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
+                            <f:selectItem itemLabel="AV. AVENIDA" itemValue="AV"  />
+                            <f:selectItem itemLabel="AL. ALAMEDA" itemValue="AL"  />
+                            <f:selectItem itemLabel="BL. BLOCK" itemValue="BL"  />
+                            <f:selectItem itemLabel="CAL. CALLE" itemValue="CAL" />
+                            <f:selectItem itemLabel="CAR. CARRETERA" itemValue="CAR" />
+                            <f:selectItem itemLabel="JR. JIRON" itemValue="JR" />
+                            <f:selectItem itemLabel="MLC. MALECÓN" itemValue="MLC" />
+                            <f:selectItem itemLabel="OVL. OVALO" itemValue="OVL" />
+                            <f:selectItem itemLabel="PJ. PASAJE" itemValue="PJ" />
+                            <f:selectItem itemLabel="PQ. PARQUE" itemValue="PQ" />
+                            <f:selectItem itemLabel="PZA. PLAZA" itemValue="PZA" />
+                        </p:selectOneMenu>                          
+                        
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_telefonoFijo}" for="telefonoFijo" />
+                        <p:inputText id="telefonoFijo" value="#{fichaGeneralEmpleadoController.selected.telefonoFijo}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_telefonoFijo}" size="10" maxlength="10"/>
+
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_telefonoCelular}" for="telefonoCelular" />
+                        <p:inputText id="telefonoCelular" value="#{fichaGeneralEmpleadoController.selected.telefonoCelular}" title="#{myBundle.CreateFichaGeneralEmpleadoTitle_telefonoCelular}" size="10" maxlength="10"/>
+                                               
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_ubigeoCodigo}" for="ubigeoCodigo"  />
+                        <p:autoComplete id="ubigeoCodigo" value="#{fichaGeneralEmpleadoController.selected.ubigeoCodigo}" completeMethod="#{ubigeoController.metodo}"
+                                        var="ubigeo" itemLabel="#{ubigeo.ubigeo}" itemValue="#{ubigeo}" converter="ubigeoConverter" size="70" required="true"/>
+                        
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_estadoCivil}" />                       
+                        <p:selectOneMenu id="idgenero" value="#{fichaGeneralEmpleadoController.selected.estadoCivil}" >
+                            <f:selectItem itemLabel="Seleccione Uno" itemValue="" noSelectionOption="true" />                                  
+                            <f:selectItem itemLabel="SOLTERO(A)" itemValue="SO"  />
+                            <f:selectItem itemLabel="CASADO(A)" itemValue="CA" />
+                            <f:selectItem itemLabel="VIUDO(A)" itemValue="VI" />
+                        </p:selectOneMenu>                                                              
+
+                        <p:outputLabel value="#{myBundle.CreateFichaGeneralEmpleadoLabel_nivelEducativoId}" for="nivelEducativoId" />
+                        <p:selectOneMenu id="nivelEducativoId" value="#{fichaGeneralEmpleadoController.selected.nivelEducativoId}" required="true" requiredMessage="#{myBundle.CreateFichaGeneralEmpleadoRequiredMessage_nivelEducativoId}" converter="nivelEducativoConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{nivelEducativoController.items}"
+                                           var="nivelEducativoIdItem"
+                                           itemValue="#{nivelEducativoIdItem}"
+                                           itemLabel="#{nivelEducativoIdItem.nombre}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fichaGeneralEmpleadoController.saveNew}" value="#{myBundle.Save}" update="display,:FichaGeneralEmpleadoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FichaGeneralEmpleadoCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" onclick="PF('FichaGeneralEmpleadoCreateDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

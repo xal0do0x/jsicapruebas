@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TipoEmpleadoListForm">
+
+        <p:panel header="#{myBundle.ListTipoEmpleadoTitle}">
+            <p:dataTable id="datalist"
+                         value="#{tipoEmpleadoController.items}"
+                         var="item"
+                         rowKey="#{item.id}"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{tipoEmpleadoController.selected}">
+
+                <p:ajax event="rowSelect"   update=":TipoEmpleadoListForm:createButton :TipoEmpleadoListForm:viewButton :TipoEmpleadoListForm:editButton :TipoEmpleadoListForm:deleteButton " listener="#{tipoEmpleadoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update=":TipoEmpleadoListForm:createButton :TipoEmpleadoListForm:viewButton :TipoEmpleadoListForm:editButton :TipoEmpleadoListForm:deleteButton " listener="#{tipoEmpleadoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('TipoEmpleadoListForm:viewButton').click();"/>
+
+
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListTipoEmpleadoTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{tipoEmpleadoController.prepareCreate}" update=":TipoEmpleadoCreateForm" oncomplete="PF('TipoEmpleadoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"    icon="ui-icon-search" value="#{myBundle.View}" update=":TipoEmpleadoViewForm" oncomplete="PF('TipoEmpleadoViewDialog').show()" disabled="#{empty tipoEmpleadoController.selected}"/>
+            <p:commandButton id="editButton"    icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":TipoEmpleadoEditForm" oncomplete="PF('TipoEmpleadoEditDialog').show()" disabled="#{empty tipoEmpleadoController.selected}"/>
+            <p:commandButton id="deleteButton"  icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{tipoEmpleadoController.delete}" update=":growl,datalist" disabled="#{empty tipoEmpleadoController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

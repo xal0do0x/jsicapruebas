@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{myBundle.AppName}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <p:panel header="#{myBundle.Welcome}">
+                <p><h:outputText value="#{myBundle.WelcomeMessage}"></h:outputText></p>
+            </p:panel>
+             <h:form id="form1">
+                <p:panel id="login" header="Ingreso al Sistema" style="width: 400px;left: 35%;
+                                top: 14em;
+                                position: absolute; ">
+                <h:panelGrid columns="2">
+                    
+                    <p:outputLabel for="@next" value="Usuario:"/>
+                    <p:inputText id="usuario" value="#{userController.registrationUser.email}"
+                                 required="true" label="Usuario" onclick="$(this).select();"/>
+                    
+                    <p:outputLabel for="@next" value="Contraseña:"/>
+                    <p:password id="password" value="#{userController.registrationUser.firstName}"
+                                 required="true" label="Contraseña" onchange="firstNameChanged()"/>
+                    
+                 
+                    
+                   
+                    <p:commandButton value="Ingresar" update="@form"/>
+                   
+                </h:panelGrid>
+            </p:panel>
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
+
+</html>
